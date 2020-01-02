@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1075810727798",
+    "firebase_url": "https://joinup-by-zesh.firebaseio.com",
+    "project_id": "joinup-by-zesh",
+    "storage_bucket": "joinup-by-zesh.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1075810727798:android:932eda86af8fe344036c57",
+        "android_client_info": {
+          "package_name": "com.zesh.joinup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1075810727798-8qm1e0dns5mmr96bcj9bsdjoc1r4jpf9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD21zOK7pXCSklX-AWHODDVUdnqASpRx7I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1075810727798-8qm1e0dns5mmr96bcj9bsdjoc1r4jpf9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
