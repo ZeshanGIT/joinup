@@ -39,7 +39,6 @@ class _AuthenticateState extends State<Authenticate> {
   void _checkDeepLink(String link) async {
     if (link != null) {
       String code = link.substring(link.indexOf(RegExp('code=')) + 5);
-      print(code);
       await loginWithGitHub(code);
     }
   }

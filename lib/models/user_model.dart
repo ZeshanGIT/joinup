@@ -13,6 +13,14 @@ class User {
     @required this.photoURL,
   });
 
+  User.fromJson(Map<String, dynamic> user) {
+    this.uid = user['uid'];
+    this.firstName = user['firstName'];
+    this.lastName = user['lastName'];
+    this.email = user['email'];
+    this.photoURL = user['photoUrl'];
+  }
+
   User.fromFirebaseUser(FirebaseUser user) {
     this.uid = user.uid;
     this.firstName = user.displayName.split(' ')[0];

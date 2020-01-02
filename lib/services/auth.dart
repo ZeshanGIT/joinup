@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:joinup/models/user_model.dart';
 import 'package:joinup/services/database/user_database.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -75,26 +74,17 @@ class AuthService {
     );
   }
 
-  Stream<User> get user {
-    return _auth.onAuthStateChanged.map(_userFromFirebaseUser); 
-  }
-
-  User _userFromFirebaseUser(FirebaseUser event) {
-    return User(
-      email: event.email,
-      firstName: event.displayName,
-      lastName: '',
-      id: event.displayName,
-      photoURL: event.photoUrl,
-      uid: event.uid,
-    );
+  Stream<FirebaseUser> get user {
+    return _auth.onAuthStateChanged;
   }
 }
 
 const String GITHUB_CLIENT_ID = '06de8b3341e4c02fd405';
 const String GITHUB_CLIENT_SECRET = '0c6edc947419a478ea4ed985277637118d590ed0';
 
-Future loginWithGitHub(String code) async {
+Future<void> loginWithGitHub(String code) async {
+  print('GHub Code : $code');
+
   final response = await http.post(
     "https://github.com/login/oauth/access_token",
     headers: {"Content-Type": "application/json", "Accept": "application/json"},
@@ -110,14 +100,19 @@ Future loginWithGitHub(String code) async {
   GitHubLoginResponse loginResponse =
       GitHubLoginResponse.fromJson(json.decode(response.body));
 
-  print(loginResponse.scope);
+  print('GHub Response ${loginResponse.scope}');
   final AuthCredential credential = GithubAuthProvider.getCredential(
     token: loginResponse.accessToken,
   );
 
   final AuthResult user =
       await FirebaseAuth.instance.signInWithCredential(credential);
-  return user;
+  print('Signed In');
+  if (user.additionalUserInfo.isNewUser) {
+    print('Signed in as a new user');
+    UserDatabase(uid: user.user.uid).addUserFromFirebaseUser(user.user);
+  }
+  return;
 }
 
 class GitHubLoginRequest {
