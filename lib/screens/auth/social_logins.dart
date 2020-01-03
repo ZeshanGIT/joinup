@@ -21,7 +21,8 @@ class SocialLogins extends StatelessWidget {
               AuthResult _authResult = await AuthService().googleSignIn();
               if (_authResult != null) if (_authResult
                   .additionalUserInfo.isNewUser) {
-                // Navigator.of(context).popAndPushNamed('/newUser/gsignin');
+                print('New User');
+                Navigator.of(context).popAndPushNamed('/registerExtended');
               } else
                 print('Old Useeeeeeeeer');
             },

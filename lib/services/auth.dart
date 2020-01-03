@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:joinup/services/database/user_database.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -9,6 +10,11 @@ import 'package:http/http.dart' as http;
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<void> deleteAccount(String uid) async {
+    await (await _auth.currentUser()).delete();
+    UserDatabase(uid: uid).deleteUser();
+  }
 
   void signOut() {
     _auth.signOut();
@@ -37,6 +43,7 @@ class AuthService {
     final AuthResult authResult = await _auth.signInWithCredential(credential);
     if (authResult != null) {
       if (authResult.additionalUserInfo.isNewUser) {
+        print("New userrrr : ");
         UserDatabase().addUserFromFirebaseUser(authResult.user);
       }
     }
@@ -82,7 +89,7 @@ class AuthService {
 const String GITHUB_CLIENT_ID = '06de8b3341e4c02fd405';
 const String GITHUB_CLIENT_SECRET = '0c6edc947419a478ea4ed985277637118d590ed0';
 
-Future<void> loginWithGitHub(String code) async {
+Future<void> loginWithGitHub(String code, BuildContext context) async {
   print('GHub Code : $code');
 
   final response = await http.post(
@@ -100,17 +107,18 @@ Future<void> loginWithGitHub(String code) async {
   GitHubLoginResponse loginResponse =
       GitHubLoginResponse.fromJson(json.decode(response.body));
 
-  print('GHub Response ${loginResponse.scope}');
+  print(
+      'GHub Response ${loginResponse.scope}\t${loginResponse.accessToken}\t${loginResponse.tokenType}');
   final AuthCredential credential = GithubAuthProvider.getCredential(
     token: loginResponse.accessToken,
   );
-
   final AuthResult user =
       await FirebaseAuth.instance.signInWithCredential(credential);
   print('Signed In');
   if (user.additionalUserInfo.isNewUser) {
     print('Signed in as a new user');
     UserDatabase(uid: user.user.uid).addUserFromFirebaseUser(user.user);
+    Navigator.of(context).popAndPushNamed('/registerExtended');
   }
   return;
 }

@@ -16,26 +16,38 @@ class Home extends StatelessWidget {
           return Scaffold(
             body: Container(
               alignment: Alignment.center,
-              child: RaisedButton(
-                onPressed: () {
-                  AuthService().signOut();
-                },
-                child: Text(ss.data.firstName ?? 'Null'),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  RaisedButton(
+                    onPressed: () {
+                      AuthService().signOut();
+                    },
+                    child: Text(ss.data.firstName ?? 'Null'),
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      AuthService().deleteAccount(uid);
+                    },
+                    child: Text(ss.data.firstName ?? 'Null'),
+                  ),
+                ],
               ),
             ),
           );
-        else
-          return Container(
-            color: Colors.cyan,
-            child: Center(
-              child: RaisedButton(
+        else {
+          return Column(
+            children: <Widget>[
+              Text('Something went wrong !'),
+              FlatButton(
                 onPressed: () {
                   AuthService().signOut();
                 },
-                child: Text(''),
+                child: Text('Try Again'),
               ),
-            ),
+            ],
           );
+        }
       },
     );
   }
