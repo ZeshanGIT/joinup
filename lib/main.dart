@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (_) => Wrapper(),
           '/resetPassword': (_) => ResetPassword(),
-          'registerExtended': (_) => RegisterExtended(),
+          '/registerExtended': (_) => RegisterExtended(),
         },
       ),
     );

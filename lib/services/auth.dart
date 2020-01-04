@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:joinup/models/user_model.dart';
 import 'package:joinup/services/database/user_database.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -81,8 +82,12 @@ class AuthService {
     );
   }
 
-  Stream<FirebaseUser> get user {
-    return _auth.onAuthStateChanged;
+  Stream<User> get user {
+    return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
+  }
+
+  User _userFromFirebaseUser(FirebaseUser user) {
+    return User.fromFirebaseUser(user);
   }
 }
 

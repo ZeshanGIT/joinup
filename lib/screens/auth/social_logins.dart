@@ -22,7 +22,7 @@ class SocialLogins extends StatelessWidget {
               if (_authResult != null) if (_authResult
                   .additionalUserInfo.isNewUser) {
                 print('New User');
-                Navigator.of(context).popAndPushNamed('/registerExtended');
+                Navigator.of(context).pushNamed('/registerExtended');
               } else
                 print('Old Useeeeeeeeer');
             },

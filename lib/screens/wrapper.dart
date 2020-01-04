@@ -2,6 +2,8 @@ import 'package:connectivity/connectivity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:joinup/models/auth_models.dart';
+import 'package:joinup/models/user_model.dart';
+import 'package:joinup/screens/auth/register/register_extended.dart';
 
 import 'package:joinup/shared/noconnection.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +20,7 @@ class Wrapper extends StatelessWidget {
 
     return _connectivityResult == ConnectivityResult.none
         ? NoConnection()
-        : StreamBuilder<FirebaseUser>(
+        : StreamBuilder<User>(
             stream: AuthService().user,
             builder: (bc, usr) {
               return usr.data == null
@@ -26,7 +28,8 @@ class Wrapper extends StatelessWidget {
                       value: AuthenticateController(),
                       child: Authenticate(),
                     )
-                  : Home(usr.data.uid);
+                  : RegisterExtended();
+              // : Home(usr.data.uid);
             },
           );
   }

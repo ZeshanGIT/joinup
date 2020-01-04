@@ -13,9 +13,15 @@ class UserDatabase {
     await _userCollection.document(uid).delete();
   }
 
-  Future<void> getUser() async {
-    DocumentSnapshot dss = await _userCollection.document(uid).get();
-    print('Doc exists ? : ${dss.exists}');
+  Stream<User> getUser() {
+    return _userCollection.document(uid).snapshots().map(_userFromDocSnap);
+  }
+
+  Stream<bool> checkAvailabilty(String id) {
+    return _userCollection
+        .where('id', isEqualTo: id)
+        .snapshots()
+        .map((ss) => ss.documents.isEmpty);
   }
 
   Future<User> addUserFromFirebaseUser(FirebaseUser user) async {
@@ -29,6 +35,7 @@ class UserDatabase {
           : '',
       'email': user.email,
       'phoneNumber': user.phoneNumber,
+      'id': null,
     };
     print('User Daaataaa  : ' + userData.toString());
     await _userCollection.document(user.uid).setData(userData);
