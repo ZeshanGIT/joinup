@@ -4,6 +4,26 @@ import 'package:flutter/cupertino.dart';
 class User {
   String uid, firstName, lastName, id, email, photoURL;
 
+  @override
+  String toString() {
+    return '''\n
+    uid : $uid
+    firstName : $firstName
+    lastName : $lastName
+    id : $id
+    email : $email
+    photoURL : $photoURL''';
+  }
+
+  User.dummy() {
+    this.uid = '';
+    this.firstName = '';
+    this.lastName = '';
+    this.id = '';
+    this.email = '';
+    this.photoURL = '';
+  }
+
   User({
     @required this.uid,
     @required this.firstName,
@@ -27,5 +47,16 @@ class User {
     this.lastName = user.displayName.split(' ').sublist(1).toString();
     this.email = user.email;
     this.photoURL = user.photoUrl;
+  }
+
+  toBasicInfoJson() {
+    return {
+      'uid': uid,
+      'firstName': firstName,
+      'lastName': lastName,
+      'email': email,
+      'photoUrl': photoURL,
+      'id': id,
+    };
   }
 }

@@ -9,6 +9,10 @@ class UserDatabase {
 
   CollectionReference _userCollection = Firestore.instance.collection('user');
 
+  Future updateUser(Map<String, dynamic> data) async {
+    await _userCollection.document(uid).setData(data, merge: true);
+  }
+
   Future deleteUser() async {
     await _userCollection.document(uid).delete();
   }
@@ -43,7 +47,6 @@ class UserDatabase {
   }
 
   User _userFromDocSnap(DocumentSnapshot snapshot) {
-    print('Snapshot Data : ${snapshot.data}');
     return User.fromJson(snapshot.data);
   }
 

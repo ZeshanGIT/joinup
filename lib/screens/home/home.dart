@@ -36,16 +36,21 @@ class Home extends StatelessWidget {
             ),
           );
         else {
-          return Column(
-            children: <Widget>[
-              Text('Something went wrong !'),
-              FlatButton(
-                onPressed: () {
-                  AuthService().signOut();
-                },
-                child: Text('Try Again'),
+          return Scaffold(
+            body: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text('Something went wrong !'),
+                  FlatButton(
+                    onPressed: () {
+                      AuthService().signOut();
+                    },
+                    child: Text('Try Again'),
+                  ),
+                ],
               ),
-            ],
+            ),
           );
         }
       },

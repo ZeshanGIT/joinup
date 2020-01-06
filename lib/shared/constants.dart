@@ -4,28 +4,39 @@ const InputDecoration textFieldDecoration = InputDecoration(
   border: OutlineInputBorder(),
 );
 
-const String p = "[a-zA-Z0-9\+\.\_\%\-\+]{1,256}" +
+const whiteText = TextStyle(color: Colors.white);
+
+const String _email = "[a-zA-Z0-9\+\.\_\%\-\+]{1,256}" +
     "\\@" +
     "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
     "(" +
     "\\." +
     "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
     ")+";
-RegExp emailRegex = RegExp(p);
+RegExp emailRegex = RegExp(_email);
+
+const String _alphaNumSpace = '[a-zA-Z0-9 ]*';
+RegExp alphaNumSpaceRegex = RegExp(_alphaNumSpace);
+
+const String _id = '^(?!.*\.\.)(?!.*\.\$)[^\W][\w.]{0,29}\$';
+RegExp idRegex = RegExp(_id);
 
 class PrimaryButton extends StatelessWidget {
   final String text;
   final Function function;
+  final bool isExtended;
 
   PrimaryButton({
     @required this.text,
     @required this.function,
     Key key,
+    this.isExtended = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: isExtended ? double.maxFinite : null,
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
