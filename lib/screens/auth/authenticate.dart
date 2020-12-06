@@ -27,6 +27,7 @@ class _AuthenticateState extends State<Authenticate> {
   @override
   void dispose() {
     _disposeDeepLinkListener();
+    
     super.dispose();
   }
 

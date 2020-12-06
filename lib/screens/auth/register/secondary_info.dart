@@ -27,11 +27,12 @@ class _SecondaryInfoState extends State<SecondaryInfo> {
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            SizedBox(height: 16),
+            SizedBox(height: 16),   
             TextFormField(
               readOnly: true,
               onTap: () async {
                 dynamic val = Navigator.of(context).pushNamed('/chooseTitle');
+                print(val);
               },
               decoration: textFieldDecoration.copyWith(labelText: 'Title'),
             ),
